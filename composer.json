@@ -1,0 +1,13 @@
+{
+    "name": "docroms/cnc-bundle",
+    "type": "symfony-bundle",
+    "keywords": ["cnc"],
+    "license": "MIT",
+    "description": "Symfony Bundle for CNC movies integration",
+    "require": {
+    },
+    "autoload": {
+        "psr-0": { "docroms\\Bundle\\CncBundle": "" }
+    },
+    "target-dir": "docroms/Bundle/CncBundle"
+}

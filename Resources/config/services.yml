@@ -1,0 +1,4 @@
+services:
+    cnc.cnc:
+        class: docroms\Bundle\CncBundle\Service\Cnc
+        arguments: [@doctrine.orm.entity_manager, @service_container]
