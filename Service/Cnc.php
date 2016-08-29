@@ -23,15 +23,10 @@ class Cnc
      * @var array mandatory fields
      */
     private $mandatoryFields = array(
-        'paypalMode' => null,
-        'paypalIdentifiant' => null,
-        'paypalUserApi' => null,
-        'paypalUserPassApi' => null,
-        'paypalSignature' => null,
-        'paypalClientId' => null,
-        'paypalSecret' => null,
-        'stripeTestSecretKey' => null,
-        'stripeTestPublishableKey' => null
+        'consumerKey' => null,
+        'consumerSecret' => null,
+        'accessToken' => null,
+        'accessTokenSecret' => null
     );
 
     /**
@@ -50,21 +45,6 @@ class Cnc
     }
 
     /**
-     * @param $fields
-     * trans_id => x
-     * cust_email => xxxxxx@xx.xx
-     * @return $this
-     */
-    public function setOptionnalFields($fields)
-    {
-        foreach ($fields as $field => $value)
-            $this->mandatoryFields[$field] = $value;
-
-        return $this;
-    }
-
-
-    /**
      * @return $this
      */
     public function init(){
@@ -76,6 +56,7 @@ class Cnc
      *
      */
     public function auth(){
+        echo "auth!!!";
         return $this;
     }
 }
