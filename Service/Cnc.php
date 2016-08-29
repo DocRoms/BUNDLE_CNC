@@ -15,11 +15,6 @@ use Symfony\Component\DependencyInjection\Exception\ParameterNotFoundException;
 class Cnc
 {
     /**
-     * @var null
-     */
-    private $generatePaid = null;
-
-    /**
      * @var EntityManager
      */
     private $_entityManager;
@@ -49,7 +44,7 @@ class Cnc
         $this->_entityManager = $entityManager;
         //$container->getParameter('');
         foreach ($this->mandatoryFields as $field => $value) {
-            $this->mandatoryFields[$field] = $container->getParameter(sprintf('payment.%s', $field));
+            $this->mandatoryFields[$field] = $container->getParameter(sprintf('cnc.%s', $field));
         }
 
     }
@@ -70,32 +65,17 @@ class Cnc
 
 
     /**
-     * @param $typePayment String "paypal" or "stripe"
      * @return $this
      */
-    public function init($typePayment){
-        switch (strtolower($typePayment)){
-            case 'stripe':
-                $this->generatePaid = new stripePaiement();
-                break;
-            case 'paypal':
-                $this->generatePaid = new paypalPaiment();
-                break;
-        }
-
-        if (null === $this->generatePaid){
-            throw new ParameterNotFoundException("type Payement parameter is not properly defined");
-        }
-
-        $this->generatePaid->init($this->_entityManager, $this->mandatoryFields);
+    public function init(){
 
         return $this;
     }
 
     /**
-     * @return genericPaiement
+     *
      */
-    public function getGeneratePay(){
-        return $this->generatePaid;
+    public function auth(){
+        return $this;
     }
 }

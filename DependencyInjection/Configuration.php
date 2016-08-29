@@ -26,16 +26,10 @@ class Configuration implements ConfigurationInterface
 
         $rootNode
             ->children()
-            ->scalarNode('paypalMode')->defaultValue('sandbox')->end()
-            ->scalarNode('paypalIdentifiant')->defaultValue('')->end()
-            ->scalarNode('paypalUserApi')->defaultValue('')->end()
-            ->scalarNode('paypalUserPassApi')->defaultValue('')->end()
-            ->scalarNode('paypalSignature')->defaultValue('')->end()
-            ->scalarNode('paypalClientId')->defaultValue('')->end()
-            ->scalarNode('paypalSecret')->defaultValue('')->end()
-            ->scalarNode('stripeTestSecretKey')->defaultValue('')->end()
-            ->scalarNode('stripeTestPublishableKey')->defaultValue('')->end()
-            ->scalarNode('stripeToken')->defaultValue('')->end();
+            ->scalarNode('consumerKey')->defaultValue('')->end()
+            ->scalarNode('consumerSecret')->defaultValue('')->end()
+            ->scalarNode('accessToken')->defaultValue('')->end()
+            ->scalarNode('accessTokenSecret')->defaultValue('')->end();
 
         return $treeBuilder;
     }
