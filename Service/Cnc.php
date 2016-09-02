@@ -25,6 +25,7 @@ class Cnc
     private $mandatoryFields = array(
         'consumerKey' => null,
         'consumerSecret' => null,
+        'oauthUrl' => null,
         'accessToken' => null,
         'accessTokenSecret' => null
     );
@@ -47,7 +48,16 @@ class Cnc
     /**
      * @return $this
      */
-    public function init(){
+    public function init()
+    {
+
+        $oAuth = new OAuth($this->mandatoryFields['consumerKey'],$this->mandatoryFields['consumerSecret']);
+        $oAuth->setAuthType(OAUTH_AUTH_TYPE_URI);
+
+        $oAuth->setToken($this->mandatoryFields['accessToken'], $this->mandatoryFields['accessTokenSecret']);
+        $access = $oAuth->getAccessToken($this->mandatoryFields['oauthUrl'], null, null);
+
+        var_dump($access);
 
         return $this;
     }

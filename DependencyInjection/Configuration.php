@@ -28,6 +28,7 @@ class Configuration implements ConfigurationInterface
             ->children()
             ->scalarNode('consumerKey')->defaultValue('')->end()
             ->scalarNode('consumerSecret')->defaultValue('')->end()
+            ->scalarNode('oauthUrl')->defaultValue('')->end()
             ->scalarNode('accessToken')->defaultValue('')->end()
             ->scalarNode('accessTokenSecret')->defaultValue('')->end();
 

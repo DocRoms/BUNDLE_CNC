@@ -13,6 +13,7 @@ Add this lines : <br>
 <code>payment:</code><br>
     &nbsp;&nbsp;&nbsp;&nbsp;<code>consumerKey: your-consumer-Key</code><br>
     &nbsp;&nbsp;&nbsp;&nbsp;<code>consumerSecret: your-consumer-secret</code><br>
+    &nbsp;&nbsp;&nbsp;&nbsp;<code>oauthUrl: Authenticate URL</code><br>
     &nbsp;&nbsp;&nbsp;&nbsp;<code>accessToken: your-access-token</code><br>
     &nbsp;&nbsp;&nbsp;&nbsp;<code>accessTokenSecret : your-access-token-secret</code><br>
     
