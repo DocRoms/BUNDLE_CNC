@@ -5,6 +5,7 @@
     "license": "MIT",
     "description": "Symfony Bundle for CNC movies integration",
     "require": {
+        "league/oauth2-client": "^1.4"
     },
     "autoload": {
         "psr-0": { "docroms\\Bundle\\CncBundle": "" }
