@@ -1,6 +1,6 @@
 <?php
 
-namespace docroms\Bundle\CncBundle\DependencyInjection;
+namespace docroms\CncBundle\DependencyInjection;
 
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\Config\FileLocator;

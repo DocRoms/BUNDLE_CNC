@@ -1,6 +1,6 @@
 <?php
 
-namespace docroms\Bundle\CncBundle;
+namespace docroms\CncBundle;
 
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
