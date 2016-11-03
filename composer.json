@@ -8,7 +8,7 @@
         "guzzlehttp/guzzle": "~6.0"
     },
     "autoload": {
-        "psr-0": { "": "" }
+        "psr-0": { "docroms\\cncBundle": "" }
     },
-    "target-dir": ""
+    "target-dir": "docroms/cncBundle"
 }
