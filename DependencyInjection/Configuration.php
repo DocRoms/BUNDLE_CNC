@@ -26,11 +26,17 @@ class Configuration implements ConfigurationInterface
 
         $rootNode
             ->children()
-            ->scalarNode('consumerKey')->defaultValue('')->end()
-            ->scalarNode('consumerSecret')->defaultValue('')->end()
-            ->scalarNode('oauthUrl')->defaultValue('')->end()
-            ->scalarNode('accessToken')->defaultValue('')->end()
-            ->scalarNode('accessTokenSecret')->defaultValue('')->end();
+            ->scalarNode('mode')->defaultValue('')->end()
+            ->scalarNode('production_consumer_key')->defaultValue('')->end()
+            ->scalarNode('production_consumer_secret')->defaultValue('')->end()
+            ->scalarNode('production_oauth_url')->defaultValue('')->end()
+            ->scalarNode('production_access_token')->defaultValue('')->end()
+            ->scalarNode('production_access_token_secret')->defaultValue('')->end()
+            ->scalarNode('recette_consumer_key')->defaultValue('')->end()
+            ->scalarNode('recette_consumer_secret')->defaultValue('')->end()
+            ->scalarNode('recette_oauth_url')->defaultValue('')->end()
+            ->scalarNode('recette_access_token')->defaultValue('')->end()
+            ->scalarNode('recette_access_token_secret')->defaultValue('')->end();
 
         return $treeBuilder;
     }
