@@ -6,8 +6,10 @@ use Doctrine\ORM\EntityManager;
 use Symfony\Component\Config\Definition\Exception\Exception;
 use Symfony\Component\DependencyInjection\Container;
 use Symfony\Component\DependencyInjection\Exception\ParameterNotFoundException;
+
 use GuzzleHttp\Client;
 use GuzzleHttp\HandlerStack;
+use GuzzleHttp\Subscriber\Oauth\Oauth1;
 
 use docroms\CncBundle\Classe;
 
@@ -20,6 +22,9 @@ use docroms\CncBundle\Classe;
  */
 class Cnc
 {
+    const URI_PING_AUTH = 'editor/oauth-ping';
+    const URI_PRODUCTS = 'editor/v1/products';
+
     /**
      * @var EntityManager
      */
@@ -110,6 +115,7 @@ class Cnc
     }
 
     /**
+     * Envoie les oeuvres au CNC
      * @param $movie Classe\oeuvre
      */
     public function SendToCnc($oeuvre){
@@ -117,38 +123,91 @@ class Cnc
     }
 
     /**
+     * Récupère les oeuvres du CNC
+     * @return string
+     */
+    public function GetFromCnc(){
+        return $this->getMyAllOeuvres();
+    }
+
+    /**
+     * Envoie mes oeuvres au CNC.
      * @param $oeuvre Classe\oeuvre
      */
     private function sendOeuvre($oeuvre)
     {
+        $client = $this->getClientOAuth();
 
-        $client = new Client([
-            // Base URI is used with relative requests
-            'base_uri' => $this->_oauth_url,
+        $json = $oeuvre->getJson();
+
+        $result = $client->request('POST', $this->getConstantePath(Cnc::URI_PRODUCTS),
+            ['body' => $json]);
+
+
+        return $result->getBody()->getContents();
+    }
+
+    /**
+     * Récupère mes oeuvres du CNC.
+     */
+    private function getMyAllOeuvres(){
+
+        $client = $this->getClientOAuth();
+
+        $result2 = $client->request('GET', $this->getConstantePath(Cnc::URI_PRODUCTS));
+
+        return $result2->getBody()->getContents();
+    }
+
+    /**
+     * Permet de retournet le Client, si l'authentification à été acceptée et que le ping est passé.
+     * @return Client
+     */
+    protected function getClientOAuth(){
+
+        $stack = HandlerStack::create();
+
+        $middleware = new Oauth1([
+            'consumer_key'    => $this->_consumer_key,
+            'consumer_secret' => $this->_consumer_secret,
+            'token'           => $this->_access_token,
+            'token_secret'    => $this->_access_token_secret,
+            'signature_method' => Oauth1::SIGNATURE_METHOD_HMAC
         ]);
 
-        echo $this->_oauth_url . '/editor/oauth-ping <br><br><br><br><br><br>';
+        $stack->push($middleware);
 
-        $response = $client->request('GET', 'editor/oauth-ping');
+        $client = new Client([
+            'base_uri' => $this->_oauth_url,
+            'handler' => $stack,
+            'auth' => 'oauth'
+        ]);
 
-        if ($response->getStatusCode() === 200 && $response->getReasonPhrase() === 'OK'){
-            
-            $json = $oeuvre->getJson();
+        $response = $client->request('GET', $this->getConstantePath(Cnc::URI_PING_AUTH));
 
-            var_dump($json);
+        //var_dump($response->getBody()->getContents());
+        //echo '<br>Response from ping end<br><br><br>';//die();
 
-            // echo '<br><br><br><br>';
-
-            // var_dump($this->_mandatoryFields);
-            //die('end of Cnc Bundle for now');
-
-        }else{
+        if ($response->getStatusCode() != 200 && $response->getReasonPhrase() != 'OK') {
             throw new Exception('ERROR - API IS NOT CALLABLE.');
         }
 
-        var_dump($response); die(" <plouf >");
-        return false;
+        return $client;
     }
 
+    /**
+     * Permet de récuperer des Urls différentes en Prod ou en recette.
+     * @param $constante
+     * @return string
+     */
+    protected function getConstantePath($constante){
+        $uri = $constante;
+
+        if ('recette' === $this->_mandatoryFields['mode']){
+            $uri = 'api/' . $constante;
+        }
+
+        return $uri;
+    }
 
 }
